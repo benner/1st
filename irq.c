@@ -1,4 +1,5 @@
 #include <irq.h>
+#include <idt.h>
 #include <kernlib.h>
 #include <timer.h>
 

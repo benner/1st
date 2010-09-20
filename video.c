@@ -3,19 +3,20 @@
 #define TEXT_COL (80)
 #define TEXT_ROW (24)
 
-static volatile unsigned short * _text_buffer = (unsigned short *) 0xB8000;
-int x_pos, y_pos;
-int attrib = 0x0F;
+static volatile u16_t * _text_buffer = (unsigned short *) 0xB8000;
+u8_t x_pos, y_pos;
+u8_t attrib = 0x0F;
 
 
 void _video_clear_screen(void); 
 void putchar(int); 
 void update_cursor(int, int);
-void _video_scrool(); 
+static void video_scrool(); 
 
 void update_cursor(int row, int col)
 {
-unsigned short position=(row*80) + col;
+  
+  u16_t position=(row*80) + col;
 
   // cursor LOW port to vga INDEX register
   outb(0x3D4, 0x0F);
@@ -26,7 +27,8 @@ unsigned short position=(row*80) + col;
   outb(0x3D5, (unsigned char )((position>>8)&0xFF));
 }
 
-void _video_clear_screen(void) {
+void _video_clear_screen(void)
+{
   unsigned blank;
   int i;
   
@@ -42,7 +44,7 @@ void init_video(void) {
 
 }
 
-void _video_scrool() {
+static void video_scrool(void) {
   unsigned temp, blank;
 
   blank = 0x20 | (attrib << 8);
@@ -76,7 +78,7 @@ void putchar(int c) {
     }
   }
 
-  _video_scrool(); 
+  video_scrool(); 
   update_cursor(y_pos, x_pos);
 }
 

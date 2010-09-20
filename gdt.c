@@ -3,9 +3,11 @@
 gdt_entry_t gdt[10];
 gdt_ptr_t   gp;
 
+void gdt_install(void);
+void gdt_set_gate(int num, u32_t, u32_t, u8_t, u8_t);
 
 /* Setup a descriptor in the Global Descriptor Table */
-void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran)
+void gdt_set_gate(int num, u32_t base, u32_t limit, u8_t access, u8_t gran)
 {
     /* Setup the descriptor base address */
     gdt[num].base_low = (base & 0xFFFF);
@@ -21,7 +23,7 @@ void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned cha
     gdt[num].access = access;
 }
 
-void gdt_install()
+void gdt_install(void)
 {
     /* Setup the GDT pointer and limit */
     gp.limit = sizeof(gdt_entry_t)*3 - 1;

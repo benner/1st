@@ -132,7 +132,11 @@ k_main (unsigned long magic, unsigned long addr)
 		      (unsigned) mmap->length_low >> 10,
 		      (unsigned) mmap->type);
         if (mmap->type == 0x1)
+        {
           printf(" (free)\n");
+          memset((addr_t)(mmap->base_addr_low), mmap->length_low, 0);
+
+        }
         else printf("\n");
       }
     }
@@ -141,16 +145,16 @@ k_main (unsigned long magic, unsigned long addr)
   printf("Starting initalization...\n");
 
   gdt_install();
-  printf("gdt installed\n");
+  printf("GDT installed\n");
 
   idt_install();
-  printf("idt installed\n");
+  printf("IDT installed\n");
 
   irq_install();
-  printf("irq installed\n");
+  printf("IRQ installed\n");
 
   timer_init(400);
-  printf("temer installed\n");
+  printf("PIT installed\n");
 
   register_irq_handler(1, keyboard_handler);
 

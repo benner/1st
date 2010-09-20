@@ -64,6 +64,8 @@ extern void isr30 ();
 extern void isr31 ();
 
 void isr_handler(registers_t);
+void idt_set_gate(u8_t, u32_t, u16_t, u8_t);
+void idt_flush(u32_t);
 extern void idt_install();
 #endif
 

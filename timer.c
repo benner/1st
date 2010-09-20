@@ -6,6 +6,7 @@
 int timer_ticks = 0;
 
 void timer_handler(registers_t regs);
+void timer_init(u32_t);
 
 void timer_handler(registers_t regs)
 {

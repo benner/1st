@@ -4,6 +4,9 @@
 idt_entry_t idt[256];
 idt_ptr_t   ip;
 
+void idt_install(void);
+void idt_set_gate(u8_t, u32_t, u16_t, u8_t);
+
 void isr_handler(registers_t regs)
 {
   printf("received interrupt: %u\n", regs.int_no);
@@ -20,7 +23,7 @@ void idt_set_gate(u8_t num, u32_t base, u16_t sel, u8_t flags)
   idt[num].flags   = flags /* | 0x60 */;
 } 
 
-void idt_install()
+void idt_install(void)
 {
   ip.limit = sizeof(idt_entry_t) * 256 -1;
   ip.base  = (u32_t)&idt;
