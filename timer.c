@@ -13,7 +13,7 @@ void timer_handler(registers_t regs)
   timer_ticks++;
   if (timer_ticks % 180 == 0)
   {
-    //printf("got tick %d!\n", timer_ticks);
+    printf("got tick %d!\n", timer_ticks);
   }
 }
 
